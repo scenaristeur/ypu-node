@@ -1,4 +1,22 @@
-# node 
+# dev
+
+`npm run dev`
+
+# add a todo
+
+in another terminal
+
+`node add_todo.js`
+
+# install global
+
+!! buggy !!
+install globally with `npm run install-ypu`
+
+then run with `ypu`
+
+# node
+
 connects to https://scenaristeur.github.io/ypu/
 
 - https://github.com/yjs/y-websocket
