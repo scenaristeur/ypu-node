@@ -2,11 +2,48 @@ import * as Y from "yjs";
 import * as W from "y-websocket";
 import WebSocket from "ws";
 import { Awareness } from "y-protocols/awareness.js";
+
+import "dotenv/config";
 import * as fs from "fs";
+import { Command } from "commander";
+
+import inquirer from "inquirer";
 
 // watch
-let watch = true;
-let watchFolder = "./input/";
+let watch = process.env.WATCH;
+let watchFolder = process.env.WATCH_FOLDER;
+console.log("env.WATCH", watch);
+console.log("env.WATCH_FOLDER", watchFolder);
+
+const program = new Command();
+
+program
+  .option("-c, --continuous <n>", "set the continuous mode", parseInt)
+  .option("-h, --headless [headless]", "set the headless mode")
+  .option("-s, --speak [speak]", "set the speak mode")
+  .parse(process.argv);
+
+program.parse();
+
+const options = program.opts();
+const limit = options.first ? 1 : undefined;
+//   console.log(program.args[0].split(options.separator, limit));
+console.log("args", program.args);
+
+inquirer
+  .prompt([
+    /* Pass your questions in here */
+  ])
+  .then((answers) => {
+    // Use user feedback for... whatever!!
+  })
+  .catch((error) => {
+    if (error.isTtyError) {
+      // Prompt couldn't be rendered in the current environment
+    } else {
+      // Something else went wrong
+    }
+  });
 
 // nodejs pendant of ypu / $initWEbsSocketBus plugin
 
