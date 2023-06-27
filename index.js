@@ -2,11 +2,16 @@ import * as Y from "yjs";
 import * as W from "y-websocket";
 import WebSocket from "ws";
 import { Awareness } from "y-protocols/awareness.js";
+import * as fs from "fs";
+
+// watch
+let watch = true;
+let watchFolder = "./input/";
 
 // nodejs pendant of ypu / $initWEbsSocketBus plugin
 
 const doc = new Y.Doc();
-let awareness = new Awareness(doc)
+let awareness = new Awareness(doc);
 const wsProvider = new W.WebsocketProvider(
   "ws://localhost:1234",
   "my-ypu",
@@ -23,6 +28,8 @@ let registers = doc.getArray("registers");
 let todos = doc.getMap("todos");
 let pending = doc.getMap("pending");
 let done = doc.getMap("done");
+
+//YJS ONLINE OBSERVE
 
 memory.observe((memoryEvent) => {
   memoryEvent.target === memory; // => true
@@ -99,4 +106,11 @@ awareness.on("change", (changes) => {
   });
   //console.log(usersStates)
   // this.store.commit('actor/updateUsersStates', usersStates)
+});
+
+// WATCH
+//https://www.codeproject.com/Articles/699468/Monitoring-a-Folder-for-Changes-in-Files-and-Folde
+fs.watch(watchFolder, { persistent: true }, function (event, fileName) {
+  console.log("Event: " + event);
+  console.log(fileName + "\n");
 });
